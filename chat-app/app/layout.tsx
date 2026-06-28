@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aria — AI Companion",
-  description: "Your personal AI companion",
+  title: "Companion — AI Chat",
+  description: "Your personal AI companion that remembers everything about you",
 };
 
 export default function RootLayout({

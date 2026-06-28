@@ -42,7 +42,7 @@ export function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Message Aria..."
+          placeholder="Type a message..."
           disabled={isStreaming}
           rows={1}
           className="min-h-[44px] max-h-[160px] resize-none rounded-xl border-border/50 bg-muted/30 text-sm placeholder:text-muted-foreground/60 focus-visible:ring-pink-accent/30"
