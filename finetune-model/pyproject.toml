@@ -1,5 +1,5 @@
 [project]
-name = "server"
+name = "finetune-model"
 version = "0.1.0"
 description = "Production-ready FastAPI inference server for fine-tuned TinyLlama model"
 readme = "README.md"
