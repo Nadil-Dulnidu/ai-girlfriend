@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
 
 import torch
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -67,9 +67,11 @@ app.add_middleware(
     allow_headers=allow_headers,
 )
 
+from app.middleware.auth import verify_api_key
+
 app.include_router(generate_router)
 app.include_router(stream_router)
-app.include_router(openai_router, prefix="/v1")
+app.include_router(openai_router, prefix="/v1", dependencies=[Depends(verify_api_key)])
 
 
 @app.get("/health", response_model=HealthResponse)
