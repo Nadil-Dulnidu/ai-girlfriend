@@ -10,6 +10,7 @@ from app.config.config_loader import get_config_value
 from app.config.logging import get_logger
 from app.model import load_model
 from app.routes.generate import router as generate_router
+from app.routes.openai_compat import router as openai_router
 from app.routes.stream import router as stream_router
 from app.schemas import HealthResponse
 
@@ -68,6 +69,7 @@ app.add_middleware(
 
 app.include_router(generate_router)
 app.include_router(stream_router)
+app.include_router(openai_router, prefix="/v1")
 
 
 @app.get("/health", response_model=HealthResponse)

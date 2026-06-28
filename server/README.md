@@ -124,6 +124,89 @@ data: great
 data: [DONE]
 ```
 
+### POST /v1/chat/completions (OpenAI-compatible)
+
+Fully OpenAI API-compatible endpoint. Works with Vercel AI SDK, LangChain, and any OpenAI client.
+
+Non-streaming:
+
+```bash
+curl -X POST http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen3-finetuned",
+    "messages": [{"role": "user", "content": "Hey, how are you?"}],
+    "stream": false
+  }'
+```
+
+Response:
+```json
+{
+  "id": "chatcmpl-abc123",
+  "object": "chat.completion",
+  "created": 1719500000,
+  "model": "qwen3-finetuned",
+  "choices": [{
+    "index": 0,
+    "message": { "role": "assistant", "content": "I'm great! What about you?" },
+    "finish_reason": "stop"
+  }],
+  "usage": {
+    "prompt_tokens": 24,
+    "completion_tokens": 9,
+    "total_tokens": 33
+  }
+}
+```
+
+Streaming:
+
+```bash
+curl -X POST http://localhost:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "qwen3-finetuned",
+    "messages": [{"role": "user", "content": "Tell me a joke"}],
+    "stream": true
+  }'
+```
+
+Response (SSE):
+```
+data: {"id":"chatcmpl-...","object":"chat.completion.chunk","created":...,"model":"qwen3-finetuned","choices":[{"index":0,"delta":{"content":"Why"},"finish_reason":null}]}
+
+data: {"id":"chatcmpl-...","object":"chat.completion.chunk","created":...,"model":"qwen3-finetuned","choices":[{"index":0,"delta":{},"finish_reason":"stop"}]}
+
+data: [DONE]
+```
+
+## Connecting to Vercel AI SDK
+
+```typescript
+// Install: npm install ai @ai-sdk/openai-compatible
+
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+
+const myModel = createOpenAICompatible({
+  name: "qwen3-finetuned",
+  baseURL: "https://your-deployed-server.com/v1",
+});
+
+export const model = myModel("qwen3-finetuned");
+```
+
+Then use it with `streamText`, `generateText`, or `useChat` exactly like any other Vercel AI SDK model:
+
+```typescript
+import { streamText } from "ai";
+
+const result = streamText({
+  model,
+  messages: [{ role: "user", content: "Hello!" }],
+});
+```
+
 ## Project Structure
 
 ```
@@ -140,7 +223,8 @@ server/
 │   └── routes/
 │       ├── __init__.py
 │       ├── generate.py      # POST /generate
-│       └── stream.py        # POST /generate/stream (SSE)
+│       ├── stream.py        # POST /generate/stream (SSE)
+│       └── openai_compat.py # POST /v1/chat/completions (OpenAI-compatible)
 ├── config.json              # All server configuration
 ├── server.py                # Entry point
 ├── pyproject.toml
