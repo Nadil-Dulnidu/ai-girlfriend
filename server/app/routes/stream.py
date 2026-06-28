@@ -81,7 +81,7 @@ async def generate_stream(request: Request, body: GenerateRequest) -> StreamingR
 
     logger.info(f"Received stream request: message='{body.message[:50]}...'")
 
-    prompt = build_prompt(system_prompt, body.message)
+    prompt = build_prompt(system_prompt, body.message, tokenizer)
 
     return StreamingResponse(
         event_stream(

@@ -24,7 +24,7 @@ async def generate(request: Request, body: GenerateRequest) -> GenerateResponse:
 
     logger.info(f"Received generate request: message='{body.message[:50]}...'")
 
-    prompt = build_prompt(system_prompt, body.message)
+    prompt = build_prompt(system_prompt, body.message, tokenizer)
 
     try:
         response_text, tokens_generated = generate_response(

@@ -19,7 +19,7 @@ logger = get_logger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Load the model on startup and clean up on shutdown."""
-    model_id: str = get_config_value("model", "model_id", default="nadil-dulnidu/ai-girlfriend-TinyLlama-finetuned-model")
+    model_id: str = get_config_value("model", "model_id", default="nadil-dulnidu/ai-girlfriend-Qwen3-finetuned-model")
     system_prompt: str = get_config_value("model", "system_prompt", default="You are a helpful and caring AI girlfriend.")
 
     logger.info(f"Starting server — loading model: {model_id}")
@@ -47,8 +47,8 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 app = FastAPI(
-    title="TinyLlama Inference Server",
-    description="Production-ready inference server for a fine-tuned TinyLlama model",
+    title="Qwen3 Inference Server",
+    description="Production-ready inference server for a fine-tuned Qwen3 model",
     version="1.0.0",
     lifespan=lifespan,
 )

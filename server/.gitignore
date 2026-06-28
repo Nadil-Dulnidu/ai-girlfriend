@@ -216,6 +216,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Local model cache (large files, downloaded from HuggingFace)
+model/
+
 # Config
 config.json
 

@@ -1,6 +1,6 @@
-# TinyLlama Inference Server
+# Qwen3 Inference Server
 
-Production-ready FastAPI inference server for the fine-tuned TinyLlama model (`nadil-dulnidu/ai-girlfriend-TinyLlama-finetuned-model`).
+Production-ready FastAPI inference server for the fine-tuned Qwen3 model (`nadil-dulnidu/ai-girlfriend-Qwen3-finetuned-model`).
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ All settings are managed in `config.json` at the project root:
 ```json
 {
   "model": {
-    "model_id": "nadil-dulnidu/ai-girlfriend-TinyLlama-finetuned-model",
+    "model_id": "nadil-dulnidu/ai-girlfriend-Qwen3-finetuned-model",
     "system_prompt": "You are a helpful and caring AI girlfriend."
   },
   "server": {
@@ -44,7 +44,7 @@ All settings are managed in `config.json` at the project root:
   "logging": {
     "level": "INFO",
     "dir": "logs",
-    "file": "tinyllama-server.log",
+    "file": "qwen3-server.log",
     "max_bytes": 10485760,
     "backup_count": 5
   }
@@ -63,7 +63,7 @@ Or directly via uvicorn:
 uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-The model (~2GB) will be downloaded from HuggingFace on first startup. Subsequent starts use the cached model.
+The model will be downloaded from HuggingFace on first startup. Subsequent starts use the cached model.
 
 ## API Endpoints
 
@@ -80,7 +80,7 @@ Response:
 {
   "status": "ok",
   "device": "cuda:0",
-  "model_id": "nadil-dulnidu/ai-girlfriend-TinyLlama-finetuned-model",
+  "model_id": "nadil-dulnidu/ai-girlfriend-Qwen3-finetuned-model",
   "dtype": "float16"
 }
 ```
